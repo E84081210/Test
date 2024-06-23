@@ -7,13 +7,8 @@ This repository provides a simple example and demonstration of a Butterworth fil
 
 本專案提供了一個用 Python 實現的 Butterworth 濾波器的簡單示例和演示，特別適用於處理背景複雜的音頻。為了使程式碼運行更加簡單，所有的內容將在 Google Colab 上實現，所以不需要做環境上的調整。
 
-## Core Idea 核心概念
-
-
-
-# README Template
-
-![專案封面圖](https://fakeimg.pl/500/)
+## Result 成果展示
+![專案封面圖](https://github.com/E84081210/Test/blob/main/Result/5.0_result.png)
 
 > 此專案是一份 README 的撰寫範本，主要是方便所有人可以快速撰寫 README，讓大家可以更有方向的去寫出 README。
 

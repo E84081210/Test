@@ -8,25 +8,58 @@ This repository provides a simple example and demonstration of a Butterworth fil
 本專案提供了一個用 Python 實現的 Butterworth 濾波器的簡單示例和演示，特別適用於處理背景複雜的音頻。為了使程式碼運行更加簡單，所有的內容將在 Google Colab 上實現，所以不需要做環境上的調整。
 
 ## Result 成果展示
-![專案封面圖](https://github.com/E84081210/Test/blob/main/Result/5.0_result.png)
+Input: YouTube URL (or apply Default) Output: org_audio.mpe(original audio) processed_audio.mp3（processed audio）
 
-> 此專案是一份 README 的撰寫範本，主要是方便所有人可以快速撰寫 README，讓大家可以更有方向的去寫出 README。
+輸入：YouTube 網址（亦可以使用 Default）輸出：org_audio.mpe（紀錄原始音訊）processed_audio.mp3（處理後的音訊）
 
-- [線上觀看連結](https://israynotarray.com/)
+<img src="https://github.com/E84081210/Test/blob/main/Result/5.0_result.png" alt="專案封面圖" width="80%">
 
-## 功能
+Top image: waveform of the original audio. Bottom image: waveform of the processed audio. The audio quality shows noticeable differences, especially in the reduced background noise and the highlighted vocals. However, the processed audio sounds noticeably thinner.
 
-測試帳號密碼 **（請斟酌提供，建議只提供僅能觀看不能操作的帳號密碼）**
+圖片上方：原始音訊的波形圖。圖片下方：處理後的音訊波形圖。音訊的品質有很明顯的差異，特別是在背景噪音降低和人聲凸顯的部分，不過，處理後的音訊明顯比較單薄。
 
-```bash
-帳號： example@example.com
-密碼： example
+## Iteration 版本迭代
+
+### :one: 第一版
+In version I, an arbitrary audio signal was used for preliminary algorithm testing. However, the results were relatively unsatisfactory, with significant degradation in audio quality.
+在版本 I 中，我使用了隨機音頻信號進行初步的算法測試。然而，結果非常不理解，音質顯著地下降了。
+
+```python
+# Generate simulated data
+np.random.seed(0)
+fs = 8000  # Sampling rate
+t = np.linspace(0, 1, fs, endpoint=False)
+desired_signal = np.sin(2 * np.pi * 300 * t)  # Simulated desired audio signal
+noise = 0.5 * np.random.normal(size=t.shape)  # Simulated noise
+received_signal = desired_signal + noise  # Signal received by microphone
+
+# LMS filter implementation
+def lms_filter(received_signal, desired_signal, mu, num_taps):
+    n = len(received_signal)
+    h = np.zeros(num_taps)  # Filter weights initialization
+    output = np.zeros(n)  # Output signal
+    error = np.zeros(n)  # Error signal
+    
+    for i in range(num_taps, n):
+        x = received_signal[i:i-num_taps:-1]
+        y = np.dot(h, x)
+        error[i] = desired_signal[i] - y
+        h = h + 2 * mu * error[i] * x
+        output[i] = y
+    
+    return output, error, h
+
+# Set LMS filter parameters
+mu = 0.01  # Learning rate
+num_taps = 32  # Number of filter coefficients
+
+# Apply LMS filter
+output_signal, error_signal, filter_weights = lms_filter(received_signal, desired_signal, mu, num_taps)
 ```
 
-- [x] 登入
-- [x] 登出
-- [x] 產品列表
-...
+
+
+
 
 ## 畫面
 
@@ -135,13 +168,4 @@ COUSTOMPATH= # 自訂變數
 - 部署到 Github Pages
 ...
 
-## 聯絡作者
 
-> ps. 這邊絕對不是業配，而是要適當提供一些方式讓觀看者知道你的聯絡方式，讓他們可以更方便的找到你。
-
-你可以透過以下方式與我聯絡
-
-- [部落格](https://israynotarray.com/)
-- [Facebook](https://www.facebook.com/israynotarray)
-- [Instagram](https://www.instagram.com/isray_notarray/)
-...

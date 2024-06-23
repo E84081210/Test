@@ -1,5 +1,3 @@
-![](https://img.shields.io/github/stars/hsiangfeng/README-Example-Template.svg)｜![](https://img.shields.io/github/forks/hsiangfeng/README-Example-Template.svg)｜![](https://img.shields.io/github/issues-pr/hsiangfeng/README-Example-Template.svg)｜![](https://img.shields.io/github/issues/hsiangfeng/README-Example-Template.svg)
-
 # Butter Noise Fliter 奶油聲音過濾器
 
 ## Introduction 簡介
@@ -20,9 +18,12 @@ Top image: waveform of the original audio. Bottom image: waveform of the process
 
 ## Iteration 版本迭代
 
-### :one: 第一版
+### Version :one: 第一版
 In version I, an arbitrary audio signal was used for preliminary algorithm testing. However, the results were relatively unsatisfactory, with significant degradation in audio quality.
+
 在版本 I 中，我使用了隨機音頻信號進行初步的算法測試。然而，結果非常不理解，音質顯著地下降了。
+
+<img src="https://github.com/E84081210/Test/blob/main/Result/preliminary_test.png" alt="專案封面圖" width="80%">
 
 ```python
 # Generate simulated data
@@ -56,116 +57,38 @@ num_taps = 32  # Number of filter coefficients
 # Apply LMS filter
 output_signal, error_signal, filter_weights = lms_filter(received_signal, desired_signal, mu, num_taps)
 ```
+### Version :two: - :four: 第二 - 第四版
+Starting from version II, I introduced real videos for testing, primarily including the following three types:
 
+- Videos with slight background noise, such as official live MV recordings.
+- Edited daily life videos, such as Vlogs produced by professional YouTubers.
+- Unedited daily life videos, such as those shot with smartphones and directly uploaded after minimal editing.
 
+The first two types underwent advanced filtering that preserved some noise, making further filtering unnecessary. However, the filtered audio resulted in many flaws and even introduced additional noise. This extra noise is not actual erroneous signals but rather auditory illusions perceived by humans, making the sound appear muffled.
 
+Later on, I learned about low-pass and high-pass filters, including their suitable applications and the sequence in which they should be applied.
 
+Interestingly, during testing, I found that some videos deliberately retain certain background noise to enhance realism. Therefore, after confirming the use of Butterworth filters in the algorithm, I decided to manually add some reverberation to maintain the authenticity and richness of the filtered sound.
 
-## 畫面
+從第二版開始，我導入了真實的影片進行測試，主要包括以下三種類型：
 
-> 可提供 1~3 張圖片，讓觀看者透過 README 了解整體畫面
+- 些許雜音的影片，例如：由官方發布的 Live MV 現場影片。
+- 日常生活短片（有後製），例如：專業 YouTuber 拍攝的 Vlog。
+- 日常生活短片（無後製），例如：以手機拍攝、經剪輯後直接上傳的 Vlog。
 
-![範例圖片 1](https://fakeimg.pl/500/)
-![範例圖片 2](https://fakeimg.pl/500/)
-![範例圖片 3](https://fakeimg.pl/500/)
+前兩者已經過高級濾波器處理，保留了一些雜音，因此不需要進一步過濾。然而，過濾後的音訊卻造成了許多瑕疵，甚至添加了更多的雜音。這些額外的雜音並非真實添加的錯誤訊號，而是人類聽覺上的錯覺，導致聲音聽起來更混濁。
 
-## 安裝
+後來，我學習到了低通濾波器和高通濾波器，以及它們適用的不同場景和使用順序。
 
-> 請務必依據你的專案來調整內容。
+有趣的是，在測試過程中，我發現部分影片會故意保留一些雜音，以增強真實感。因此，在確定演算法使用 Butterworth 濾波器後，我決定手動添加一些聲音的回音，以保持過濾後聲音的真實性和豐富度。
 
-以下將會引導你如何安裝此專案到你的電腦上。
+### Conclusive Version 5️⃣: 最終第五版
+In the final [audio file](https://github.com/E84081210/Test/blob/main/Result/5.0_audio.mp3), I applied a Butterworth filter, added reverb effects, and performed normalization at several stages.
 
-Node.js 版本建議為：`16.15.0` 以上...
+在最終的[音訊檔案](https://github.com/E84081210/Test/blob/main/Result/5.0_audio.mp3)中，我套用了 Butterworth Filter 以及添加 Reverb 回迴，並在許多地方做了正規化的處理。
 
-### 取得專案
+## Retrospective 檢討
+In fact, after initial adjustments to my algorithm design, I achieved relatively stable waveforms. However, the audio always had an indescribable strangeness – voices became very thin, distorted, almost surreal. At first listen, one might think the recording was made in a bathtub or using an old-fashioned phone. While I did achieve my goals from a data perspective, I further optimized for realism in human perception. I preserved waveform integrity while making voices more prominent and reducing surrounding noise.
 
-```bash
-git clone git@github.com:hsiangfeng/README-Example-Template.git
-```
-
-### 移動到專案內
-
-```bash
-cd README-Example-Template
-```
-
-### 安裝套件
-
-```bash
-npm install
-```
-
-### 環境變數設定
-
-請在終端機輸入 `cp .env.example .env` 來複製 .env.example 檔案，並依據 `.env` 內容調整相關欄位。
-
-### 運行專案
-
-```bash
-npm run serve
-```
-
-### 開啟專案
-
-在瀏覽器網址列輸入以下即可看到畫面
-
-```bash
-http://localhost:8080/
-```
-
-## 環境變數說明
-
-```env
-APIPATH= # API 位置
-COUSTOMPATH= # 自訂變數
-...
-```
-
-## 資料夾說明
-
-- views - 畫面放置處
-- controllers - 控制器放置處
-- modules - 模組放置處
-- assets - 靜態資源放置處
-  - scss - scss 檔案放置處
-  - images - 圖片放置處
-...
-
-## 專案技術
-
-- Node.js v16.15.0
-- Vue v3.2.20
-- Vite v4.0.4
-- Vue Router v4.0.11
-- Axios v0.24.0
-- Bootstrap v5.1.3
-...
-
-## 第三方服務
-
-- Algolia
-- Google Analytics
-...
-
-## CI/CD 說明
-
-此專案有使用 Github Actions，所以發起 PR 時會自動執行以下動作：
-
-- 建立 Node.js 環境
-- 安裝相依套件
-- 編譯程式碼
-- 執行 ESLint 掃描
-- 執行測試
-...
-
-當專案 merge 到 main 時會自動執行以下動作：
-
-- 建立 Node.js 環境
-- 安裝相依套件
-- 編譯程式碼
-- 執行 ESLint 掃描
-- 執行測試
-- 部署到 Github Pages
-...
-
+事實上，在我最初的演算法設計調整後，我就能得到相對穩定的波形圖，但音訊總是有一種難以言喻的怪異感－聲音變得十分單薄、扭曲、超現實。乍聽之下，會以為這個人是在浴缸裡面錄製、或是使用老款的手機撥打電話。從數據上，我確實達到了目標，但對於人的聽感而言，我還做了更多真實性的優化，在保留波形完整的情況下，使得人聲更加凸顯、周遭的雜音下降。
 
